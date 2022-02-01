@@ -11,8 +11,20 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
+	
+	//Primeiro Método Contrutor - Com atributos
+	
+    public Usuario(long id, String nome,String usuario,String senha) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+	}
     
-    @Id
+  //Primeiro Método Contrutor - Com atributos
+    public Usuario() { }
+    
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
