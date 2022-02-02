@@ -47,19 +47,18 @@ public class UsuarioControllerTest {
 	
 	@Test
 	@Order(2)
-	@Disabled
 	@DisplayName("Não deve permitir duplicação fo Usuário")
 	public void naoDeveDuplicarUsuario( ) {
 		
-		usuarioService.CadastrarUsuario(new Usuario(0L, "Amanda Ribeiro", "amanda@email.com.br", "12345679"));
+		usuarioService.CadastrarUsuario(new Usuario(0L, "Amanda Ribeiro", "amanda@email.com.br", "123456789"));
 		
 		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L,
-				"Paulo Ribeiro", "paulo@email.com.br", "123456789"));
+				"Amanda Ribeiro", "amanda@email.com.br", "123456789"));
 		
 		ResponseEntity<Usuario> resposta = testRestTemplate
 				.exchange("/usuarios/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
 		
-		assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode());
+		assertEquals(HttpStatus.UNAUTHORIZED, resposta.getStatusCode());
 	}
 	
 }

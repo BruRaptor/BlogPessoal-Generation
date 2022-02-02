@@ -1,12 +1,19 @@
 package org.generation.blogPessoal.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -21,7 +28,7 @@ public class Usuario {
 		this.senha = senha;
 	}
     
-  //Primeiro Método Contrutor - Com atributos
+  //Primeiro Método Construtor - Sem atributos
     public Usuario() { }
     
 	@Id
@@ -40,6 +47,17 @@ public class Usuario {
     @Size(min = 5, max =100)
     private String senha;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario")
+	private List<Postagem> postagens = new ArrayList<>();
+
+    public List<Postagem> getPostagens() {
+        return this.postagens;
+    }
+
+    public void setPostagens(List<Postagem> postagens) {
+        this.postagens = postagens;
+    }
 
     public long getId() {
         return this.id;
